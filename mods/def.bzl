@@ -22,26 +22,29 @@ def _module_impl(ctx):
 
     return [ModuleInfo(files=files)]
 
-module = rule(
-    attrs = {
-        "srcs": attr.label_list(
-            allow_files = True,
-            default = [],
-        ),
-        "deps": attr.label_list(
-            allow_files = False,
-            default = [],
-            providers = [ModuleInfo],
-        ),
-        "file_hasher": attr.label(
-            default = Label("//mods:file_hasher"),
-            executable = True,
-            allow_files = True,
-            cfg = "host",
-        ),
-    },
-    outputs = {
-        "out": "%{name}.json",
-    },
-    implementation = _module_impl,
-)
+def new_module():
+    return rule(
+        attrs = {
+            "srcs": attr.label_list(
+                allow_files = True,
+                default = [],
+            ),
+            "deps": attr.label_list(
+                allow_files = False,
+                default = [],
+                providers = [ModuleInfo],
+            ),
+            "file_hasher": attr.label(
+                default = Label("//mods:file_hasher"),
+                executable = True,
+                allow_files = True,
+                cfg = "host",
+            ),
+        },
+        outputs = {
+            "out": "%{name}.json",
+        },
+        implementation = _module_impl,
+    )
+
+module = new_module()

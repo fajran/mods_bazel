@@ -1,4 +1,5 @@
 load("//mods:def.bzl", "module")
+load("//mods/extras:build.bzl", "build_trigger")
 
 module(
     name = "app",
@@ -6,4 +7,9 @@ module(
     deps = [
         "//examples/common",
     ],
+)
+
+build_trigger(
+    name = "trigger",
+    deps = [":app"],
 )
