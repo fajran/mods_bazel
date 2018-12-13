@@ -19,7 +19,18 @@ git_repository(
 )
 ```
 
-When you want to declare a module, add the following to the `BUILD` file of that module.
+To declare a module, add the following to the `BUILD` file of that module.
+
+```python
+load("@mods//mods:def.bzl", "module")
+
+module(
+    name = "library",
+    srcs = glob(["**"]),
+)
+```
+
+To declare another module and set dependency, add the following.
 
 ```python
 load("@mods//mods:def.bzl", "module")
@@ -27,6 +38,7 @@ load("@mods//mods:def.bzl", "module")
 module(
     name = "service",
     srcs = glob(["**"]),
+    deps = ["//common:library"],  # pointing to the previous 'library' module
 )
 ```
 
