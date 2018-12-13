@@ -2,7 +2,10 @@ ModuleInfo = provider(fields = ["files"])
 
 def _module_impl(ctx):
     files = []
-    files += ctx.files.srcs
+    for src in ctx.files.srcs:
+        if not src.is_source:
+            fail("srcs only accept files")
+        files.append(src)
     for dep in ctx.attr.deps:
         files += dep[ModuleInfo].files
 
